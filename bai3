@@ -1,0 +1,99 @@
+class KhachHang {
+    private String diaChi;
+    private int khachHangID;
+    private String tenKH;
+
+    public KhachHang(int khachHangID, String tenKH, String diaChi) {
+        this.khachHangID = khachHangID;
+        this.tenKH = tenKH;
+        this.diaChi = diaChi;
+    }
+
+    // Getters and Setters
+}
+
+class MatHang {
+    private float gia;
+    private int matHangID;
+    private int soLuong;
+    private String tenMH;
+
+    public MatHang(int matHangID, String tenMH, float gia, int soLuong) {
+        this.matHangID = matHangID;
+        this.tenMH = tenMH;
+        this.gia = gia;
+        this.soLuong = soLuong;
+    }
+
+    // Getters and Setters
+}
+
+class HoaDon {
+    private int hoaDonID;
+    private KhachHang kh;
+    private String ngayBan;
+    private float tongTien;
+
+    public HoaDon(int hoaDonID, KhachHang kh, String ngayBan) {
+        this.hoaDonID = hoaDonID;
+        this.kh = kh;
+        this.ngayBan = ngayBan;
+        this.tongTien = 0;
+    }
+
+    public void themMatHang(MatHangMua matHangMua) {
+        tongTien += matHangMua.getMh().getGia() * matHangMua.getSoLuong();
+    }
+
+    public float getTongTien() {
+        return tongTien;
+    }
+
+    // Getters and Setters
+}
+
+class MatHangMua {
+    private HoaDon hd;
+    private MatHang mh;
+    private int soLuong;
+
+    public MatHangMua(HoaDon hd, MatHang mh, int soLuong) {
+        this.hd = hd;
+        this.mh = mh;
+        this.soLuong = soLuong;
+    }
+
+    public MatHang getMh() {
+        return mh;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+}
+
+public class QuanLyBanHang {
+    public static void main(String[] args) {
+        // Thêm 3 mặt hàng
+        MatHang matHangX = new MatHang(1, "X", 10000, 50);
+        MatHang matHangY = new MatHang(2, "Y", 20000, 30);
+        MatHang matHangZ = new MatHang(3, "Z", 15000, 20);
+
+        // Tạo khách hàng
+        KhachHang khachHangA = new KhachHang(1, "Nguyễn Văn A", "123 Đường A");
+
+        // Tạo hóa đơn cho khách hàng Nguyễn Văn A
+        HoaDon hoaDon1 = new HoaDon(1, khachHangA, "2024-11-12");
+
+        // Thêm mặt hàng X và Y vào hóa đơn
+        MatHangMua mhMuaX = new MatHangMua(hoaDon1, matHangX, 2);
+        MatHangMua mhMuaY = new MatHangMua(hoaDon1, matHangY, 3);
+
+        // Tính tổng tiền và in thông tin hóa đơn
+        hoaDon1.themMatHang(mhMuaX);
+        hoaDon1.themMatHang(mhMuaY);
+
+        System.out.println("Hóa đơn của khách hàng: " + khachHangA.tenKH);
+        System.out.println("Tổng tiền: " + hoaDon1.getTongTien());
+    }
+}
