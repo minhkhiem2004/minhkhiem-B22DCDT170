@@ -1,0 +1,66 @@
+interface IEmployee {
+    int calculateSalary();
+    String getName();
+}
+
+abstract class Employee implements IEmployee {
+    protected String name;
+    protected int paymentPerHour;
+
+    public Employee(String name, int paymentPerHour) {
+        this.name = name;
+        this.paymentPerHour = paymentPerHour;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setPaymentPerHour(int paymentPerHour) {
+        this.paymentPerHour = paymentPerHour;
+    }
+
+    public int getPaymentPerHour() {
+        return paymentPerHour;
+    }
+}
+
+class PartTimeEmployee extends Employee {
+    private int workingHours;
+
+    public PartTimeEmployee(String name, int paymentPerHour, int workingHours) {
+        super(name, paymentPerHour);
+        this.workingHours = workingHours;
+    }
+
+  
+    public int calculateSalary() {
+        return paymentPerHour * workingHours;
+    }
+}
+
+class FullTimeEmployee extends Employee {
+    public FullTimeEmployee(String name, int paymentPerHour) {
+        super(name, paymentPerHour);
+    }
+
+    public int calculateSalary() {
+        // Giả sử lương của nhân viên FullTime cố định theo tháng (ví dụ 160 giờ mỗi tháng)
+        return paymentPerHour * 160;
+    }
+}
+
+// Sử dụng các lớp
+public class Main {
+    public static void main(String[] args) {
+        PartTimeEmployee partTime = new PartTimeEmployee("John Doe", 20, 80);
+        FullTimeEmployee fullTime = new FullTimeEmployee("Jane Smith", 25);
+
+        System.out.println(partTime.getName() + "'s Salary: " + partTime.calculateSalary());
+        System.out.println(fullTime.getName() + "'s Salary: " + fullTime.calculateSalary());
+    }
+}
